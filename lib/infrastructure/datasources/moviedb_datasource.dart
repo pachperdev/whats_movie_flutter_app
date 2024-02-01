@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:whats_movie_flutter_app/config/constants/environment.dart';
 
-import '../domain/datasources/movies_datasource.dart';
-import '../domain/entities/movie.dart';
+import '../../config/constants/environment.dart';
+import '../../domain/datasources/movies_datasource.dart';
+import '../../domain/entities/movie.dart';
 
 class MovieDbDataSource extends MoviesDataSource {
   final dio = Dio(
