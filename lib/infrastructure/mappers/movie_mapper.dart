@@ -15,7 +15,7 @@ class MovieMapper {
         popularity: movieDB.popularity ?? 0.0,
         posterPath: movieDB.posterPath != null
             ? 'https://image.tmdb.org/t/p/w500${movieDB.posterPath}'
-            : 'https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg',
+            : 'no-poster-path',
         releaseDate: movieDB.releaseDate ?? DateTime.now(),
         title: movieDB.title ?? '',
         video: movieDB.video ?? false,

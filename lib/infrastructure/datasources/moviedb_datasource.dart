@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:whats_movie_flutter_app/infrastructure/mappers/movie_mapper.dart';
+import 'package:whats_movie_flutter_app/infrastructure/models/moviedb/moviedb_response.dart';
 
 import '../../config/constants/environment.dart';
 import '../../domain/datasources/movies_datasource.dart';
@@ -20,6 +22,14 @@ class MovieDbDataSource extends MoviesDataSource {
     final response = await dio.get('/movie/now_playing', queryParameters: {
       'page': page,
     });
-    return [];
+
+    final movieDbResponse = MovieDbResponse.fromJson(response.data);
+
+    final List<Movie> movies = movieDbResponse.results!
+        .where((moviedb) => moviedb.posterPath != 'no-poster-path')
+        .map((moviedb) => MovieMapper.movieDBToEntity(moviedb))
+        .toList();
+
+    return movies;
   }
 }
