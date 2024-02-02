@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:whats_movie_flutter_app/config/constants/environment.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../providers/providers.dart';
 
 class HomeScreen extends StatelessWidget {
   static const name = 'home-screen';
@@ -7,10 +9,45 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: Text(Environment.theMovieDbKey),
+        child: _HomeView(),
       ),
+    );
+  }
+}
+
+class _HomeView extends ConsumerStatefulWidget {
+  const _HomeView({
+    super.key,
+  });
+
+  @override
+  _HomeViewState createState() => _HomeViewState();
+}
+
+class _HomeViewState extends ConsumerState<_HomeView> {
+  @override
+  void initState() {
+    super.initState();
+
+    ref.read(nowPlayingMoviesProvider.notifier).loadNextPage();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
+
+    return ListView.builder(
+      itemCount: nowPlayingMovies.length,
+      itemBuilder: (context, index) {
+        final movie = nowPlayingMovies[index];
+
+        return ListTile(
+          title: Text(movie.title),
+          subtitle: Text(movie.overview),
+        );
+      },
     );
   }
 }
