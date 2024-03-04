@@ -2,24 +2,24 @@ import '../../domain/entities/movie.dart';
 import '../models/moviedb/movie_moviedb.dart';
 
 class MovieMapper {
-  static Movie movieDBToEntity(MovieMovieDB movieDB) => Movie(
-        adult: movieDB.adult ?? false,
-        backdropPath: movieDB.backdropPath != null
-            ? 'https://image.tmdb.org/t/p/w500${movieDB.backdropPath}'
+  static Movie movieDBToEntity(MovieMovieDB moviedb) => Movie(
+        adult: moviedb.adult ?? false,
+        backdropPath: moviedb.backdropPath != null
+            ? 'https://image.tmdb.org/t/p/w500${moviedb.backdropPath}'
             : 'https://eticketsolutions.com/demo/themes/e-ticket/img/movie.jpg',
-        genreIds: movieDB.genreIds?.map((e) => e.toString()).toList() ?? [],
-        id: movieDB.id ?? 0,
-        originalLanguage: movieDB.originalLanguage ?? '',
-        originalTitle: movieDB.originalTitle ?? '',
-        overview: movieDB.overview ?? '',
-        popularity: movieDB.popularity ?? 0.0,
-        posterPath: movieDB.posterPath != null
-            ? 'https://image.tmdb.org/t/p/w500${movieDB.posterPath}'
+        genreIds: moviedb.genreIds?.map((e) => e.toString()).toList() ?? [],
+        id: moviedb.id ?? 0,
+        originalLanguage: moviedb.originalLanguage ?? '',
+        originalTitle: moviedb.originalTitle ?? '',
+        overview: moviedb.overview ?? '',
+        popularity: moviedb.popularity ?? 0.0,
+        posterPath: moviedb.posterPath != null
+            ? 'https://image.tmdb.org/t/p/w500${moviedb.posterPath}'
             : 'no-poster-path',
-        releaseDate: movieDB.releaseDate ?? DateTime.now(),
-        title: movieDB.title ?? '',
-        video: movieDB.video ?? false,
-        voteAverage: movieDB.voteAverage ?? 0.0,
-        voteCount: movieDB.voteCount ?? 0,
+        releaseDate: moviedb.releaseDate ?? DateTime.now(),
+        title: moviedb.title ?? '',
+        video: moviedb.video ?? false,
+        voteAverage: moviedb.voteAverage ?? 0.0,
+        voteCount: moviedb.voteCount ?? 0,
       );
 }
