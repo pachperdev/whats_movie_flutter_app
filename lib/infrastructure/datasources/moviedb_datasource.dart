@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:whats_movie_flutter_app/infrastructure/mappers/movie_mapper.dart';
-import 'package:whats_movie_flutter_app/infrastructure/models/moviedb/moviedb_response.dart';
 
 import '../../config/constants/environment.dart';
 import '../../domain/datasources/movies_datasource.dart';
 import '../../domain/entities/movie.dart';
+import '../mappers/movie_mapper.dart';
+import '../models/moviedb/moviedb_response.dart';
 
 class MovieDbDataSource extends MoviesDataSource {
   final dio = Dio(

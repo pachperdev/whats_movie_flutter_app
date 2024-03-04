@@ -50,7 +50,7 @@ class MovieDbResponse {
       );
 
   Map<String, dynamic> toJson() => {
-        "dates": dates?.toJson(),
+        "dates": dates == null ? null : dates!.toJson(),
         "page": page,
         "results": results == null
             ? []

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/router/app_router.dart';
 import 'config/theme/app_theme.dart';
 
-void main() async {
+Future<void> main() async {
   await dotenv.load(fileName: ".env");
 
   runApp(
