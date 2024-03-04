@@ -4,12 +4,14 @@ import '../../../domain/entities/movie.dart';
 import 'movies_repository_provider.dart';
 
 final nowPlayingMoviesProvider =
-    StateNotifierProvider<MoviesNotifier, List<Movie>>((ref) {
-  final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
-  return MoviesNotifier(
-    fetchMoreMovies: fetchMoreMovies,
-  );
-});
+    StateNotifierProvider<MoviesNotifier, List<Movie>>(
+  (ref) {
+    final fetchMoreMovies = ref.watch(movieRepositoryProvider).getNowPlaying;
+    return MoviesNotifier(
+      fetchMoreMovies: fetchMoreMovies,
+    );
+  },
+);
 
 typedef MovieCallback = Future<List<Movie>> Function({int page});
 
