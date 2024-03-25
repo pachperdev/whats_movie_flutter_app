@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_movie_flutter_app/config/helpers/human_formasts.dart';
 
 import '../../../domain/entities/movie.dart';
 
@@ -108,7 +109,7 @@ class _Slide extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                '${movie.popularity}',
+                HumanFormats.number(movie.popularity),
                 style: textStyles.bodySmall,
               ),
             ],
