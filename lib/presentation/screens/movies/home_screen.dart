@@ -45,6 +45,8 @@ class _HomeViewState extends ConsumerState<_HomeView> {
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
 
+    return FullScreenLoader();
+
     return CustomScrollView(
       physics: const ClampingScrollPhysics(),
       slivers: [
@@ -89,7 +91,6 @@ class _HomeViewState extends ConsumerState<_HomeView> {
                   MovieHorizontalListview(
                     movies: popularMovies,
                     title: 'Populares',
-                    subtitle: 'En este mes',
                     loadNextPage: () {
                       ref.read(popularMoviesProvider.notifier).loadNextPage();
                     },
