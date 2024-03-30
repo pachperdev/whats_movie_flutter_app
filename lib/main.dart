@@ -1,3 +1,4 @@
+// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,6 +23,16 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),
       routerConfig: appRouter,
+      // scrollBehavior: const MaterialScrollBehavior().copyWith(
+      //   dragDevices: {
+      //     PointerDeviceKind.mouse,
+      //     PointerDeviceKind.touch,
+      //     PointerDeviceKind.stylus,
+      //     PointerDeviceKind.invertedStylus,
+      //     PointerDeviceKind.trackpad,
+      //     PointerDeviceKind.unknown
+      //   },
+      // ),
     );
   }
 }
