@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:whats_movie_flutter_app/infrastructure/models/moviedb/movie_details.dart';
 
 import '../../config/constants/environment.dart';
 import '../../domain/datasources/movies_datasource.dart';
@@ -74,5 +75,20 @@ class MovieDbDataSource extends MoviesDataSource {
     );
 
     return _jsonToMovies(response.data);
+  }
+
+  @override
+  Future<Movie> getMovieById(String id) async {
+    final response = await dio.get('/movie/$id');
+
+    if (response.statusCode != 200) {
+      throw Exception('Movie with id $id not found');
+    }
+
+    final movieDetails = MovieDetails.fromJson(response.data);
+
+    final Movie movie = MovieMapper.movieDetailsToEntity(movieDetails);
+
+    return movie;
   }
 }
