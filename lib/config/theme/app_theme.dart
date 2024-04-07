@@ -5,12 +5,12 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       colorSchemeSeed: Colors.blue,
-      // pageTransitionsTheme: const PageTransitionsTheme(
-      //   builders: {
-      //     TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-      //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-      //   },
-      // ),
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+        },
+      ),
     );
   }
 }
