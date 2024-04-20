@@ -1,6 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:whats_movie_flutter_app/config/helpers/human_formasts.dart';
 
 import '../../domain/entities/movie.dart';
 
@@ -82,7 +82,7 @@ class _MovieItem extends StatelessWidget {
           SizedBox(
             width: size.width * 0.2,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               child: Image.network(
                 movie.posterPath,
                 loadingBuilder: (context, child, loadingProgress) =>
@@ -109,6 +109,19 @@ class _MovieItem extends StatelessWidget {
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
+                Row(
+                  children: [
+                    Icon(Icons.star_half_rounded,
+                        color: Colors.yellow.shade800),
+                    const SizedBox(width: 5),
+                    Text(
+                      HumanFormats.number(movie.voteAverage, 1),
+                      style: textStyles.bodyMedium?.copyWith(
+                        color: Colors.yellow.shade900,
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
