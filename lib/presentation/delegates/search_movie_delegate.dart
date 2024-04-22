@@ -15,13 +15,21 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   SearchMovieDelegate({required this.searchMovies});
 
+  void clearStreams() {
+    debouncedMovies.close();
+  }
+
   void _onQueryChanged(String query) {
     if (_debounceTimer?.isActive ?? false) {
       _debounceTimer?.cancel();
     }
 
-    _debounceTimer = Timer(const Duration(milliseconds: 500), () async {
-      print('Buscando en timer: $query');
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      if (query.isEmpty) {
+        debouncedMovies.add([]);
+        return;
+      }
+
       final movies = await searchMovies(query);
       debouncedMovies.add(movies);
     });
@@ -50,6 +58,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
     return IconButton(
       icon: const Icon(Icons.arrow_back_ios_rounded),
       onPressed: () {
+        clearStreams();
         close(context, null);
       },
     );
@@ -69,17 +78,15 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
       // future: searchMovies(query),
       stream: debouncedMovies.stream,
       builder: (context, snapshot) {
-        print('Realizando petición $query');
-
         final movies = snapshot.data ?? [];
 
         return ListView.builder(
           itemCount: movies.length,
           itemBuilder: (BuildContext context, int index) {
-            final movie = movies[index];
             return _MovieItem(
               movie: movies[index],
-              onMovieSelected: () {
+              onMovieSelected: (contex, movie) {
+                clearStreams();
                 close(context, movie);
               },
             );
@@ -92,9 +99,12 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
 class _MovieItem extends StatelessWidget {
   final Movie movie;
-  final Function() onMovieSelected;
+  final Function onMovieSelected;
 
-  const _MovieItem({required this.movie, required this.onMovieSelected});
+  const _MovieItem({
+    required this.movie,
+    required this.onMovieSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +113,7 @@ class _MovieItem extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        onMovieSelected();
+        onMovieSelected(context, movie);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
