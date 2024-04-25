@@ -48,7 +48,7 @@ class CustomAppbar extends ConsumerWidget {
                   ).then((movie) {
                     if (movie == null) return;
 
-                    GoRouter.of(context).go('/movie/${movie.id}');
+                    GoRouter.of(context).go('/home/0/movie/${movie.id}');
                   });
                 },
               ),

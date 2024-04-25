@@ -2,57 +2,54 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
-  const CustomBottomNavigation({super.key});
+  final int currentIndex;
 
-  int getCurrentIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).uri.toString();
+  const CustomBottomNavigation({
+    super.key,
+    required this.currentIndex,
+  });
 
-    switch (location) {
-      case '/':
-        return 0;
-      case '/categories':
-        return 1;
-      case '/favorites':
-        return 2;
-      default:
-        return 0;
-    }
-  }
-
-  void onItemTapped(int index, BuildContext context) {
+  void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
-        (context).go('/');
+        context.go('/home/0');
         break;
       case 1:
-        (context).go('/categories');
+        context.go('/home/1');
         break;
       case 2:
-        (context).go('/favorites');
+        context.go('/home/2');
         break;
       default:
+        context.go('/home/0');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
+    final colors = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
+    return NavigationBar(
       elevation: 0,
-      currentIndex: getCurrentIndex(context),
-      onTap: (index) => onItemTapped(index, context),
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home_max),
-          label: 'Inicio',
+      indicatorColor: colors.inversePrimary,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      height: size.height * 0.1,
+      backgroundColor: colors.background,
+      selectedIndex: currentIndex,
+      onDestinationSelected: (value) => _onItemTapped(context, value),
+      destinations: const [
+        NavigationDestination(
+          icon: Icon(Icons.home),
+          label: 'Home',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.label_outline),
-          label: 'Categorias',
+        NavigationDestination(
+          icon: Icon(Icons.category),
+          label: 'Categories',
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline),
-          label: 'Favoritos',
-        ),
+        NavigationDestination(
+          icon: Icon(Icons.favorite),
+          label: 'Favorites',
+        )
       ],
     );
   }
