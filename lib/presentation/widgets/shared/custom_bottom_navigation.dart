@@ -39,15 +39,15 @@ class CustomBottomNavigation extends StatelessWidget {
       onDestinationSelected: (value) => _onItemTapped(context, value),
       destinations: const [
         NavigationDestination(
-          icon: Icon(Icons.home),
+          icon: Icon(Icons.home_max_rounded),
           label: 'Home',
         ),
         NavigationDestination(
-          icon: Icon(Icons.category),
+          icon: Icon(Icons.category_outlined),
           label: 'Categories',
         ),
         NavigationDestination(
-          icon: Icon(Icons.favorite),
+          icon: Icon(Icons.favorite_border_rounded),
           label: 'Favorites',
         )
       ],

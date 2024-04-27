@@ -48,7 +48,7 @@ class _MovieHorizontalListviewState extends State<MovieHorizontalListview> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 350,
+      height: 360,
       child: Column(
         children: [
           if (widget.title != null || widget.subtitle != null)
@@ -92,6 +92,7 @@ class _Slide extends StatelessWidget {
           //* image
           SizedBox(
             width: 150,
+            height: 230,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(

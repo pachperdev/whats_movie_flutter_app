@@ -31,7 +31,6 @@ class MainApp extends StatelessWidget {
           PointerDeviceKind.stylus,
           PointerDeviceKind.invertedStylus,
           PointerDeviceKind.trackpad,
-          PointerDeviceKind.unknown
         },
       ),
     );

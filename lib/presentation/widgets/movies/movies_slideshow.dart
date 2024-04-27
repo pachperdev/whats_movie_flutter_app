@@ -15,14 +15,32 @@ class MoviesSlideshow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final size = MediaQuery.of(context).size;
+    print(size.width);
+
+    double dynamicHeight() {
+      if (size.width >= 2500) {
+        return size.height * 0.6;
+      } else if (size.width >= 2000) {
+        return size.height * 0.5;
+      } else if (size.width >= 1500) {
+        return size.height * 0.4;
+      } else if (size.width >= 1000) {
+        return size.height * 0.3;
+      } else if (size.width >= 700) {
+        return size.height * 0.2;
+      } else {
+        return size.height * 0.15;
+      }
+    }
+
     return SizedBox(
-      height: 210,
+      height: dynamicHeight(),
       width: double.infinity,
       child: FadeInDownBig(
         child: Swiper(
-          viewportFraction: 0.8,
-          scale: 0.9,
-          // autoplay: true,
+          viewportFraction: 0.5,
+          scale: 0.7,
           pagination: SwiperPagination(
             margin: const EdgeInsets.only(top: 0),
             builder: DotSwiperPaginationBuilder(
@@ -65,13 +83,6 @@ class _Slide extends StatelessWidget {
           child: Image.network(
             movie.backdropPath,
             fit: BoxFit.cover,
-            // loadingBuilder: (context, child, loadingProgress) {
-            //   if (loadingProgress != null) {
-            //     return const DecoratedBox(
-            //         decoration: BoxDecoration(color: Colors.black12));
-            //   }
-            //   return FadeIn(child: child);
-            // },
           ),
         ),
       ),
