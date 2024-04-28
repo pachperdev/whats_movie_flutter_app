@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/entities/movie.dart';
@@ -70,62 +71,44 @@ class _CustomSliverAppBar extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.white,
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
       flexibleSpace: FlexibleSpaceBar(
-          titlePadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          title: Text(
-            movie.title,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-            textAlign: TextAlign.start,
-          ),
           background: Stack(
-            children: [
-              SizedBox.expand(
-                child: Image.network(movie.posterPath, fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                  if (loadingProgress != null) {
-                    return const SizedBox();
-                  }
+        children: [
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(30),
+            ),
+            child: SizedBox.expand(
+              child: Image.network(movie.backdropPath, fit: BoxFit.cover,
+                  loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress != null) {
+                  return const SizedBox();
+                }
 
-                  return FadeIn(child: child);
-                }),
-              ),
-              const SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      stops: [0.7, 1.0],
-                      colors: <Color>[
-                        Colors.transparent,
-                        Colors.black87,
-                      ],
-                    ),
-                  ),
+                return FadeIn(child: child);
+              }),
+            ),
+          ),
+          const SizedBox.expand(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomCenter,
+                  stops: [0.0, 0.4],
+                  colors: <Color>[
+                    Colors.black87,
+                    Colors.transparent,
+                  ],
                 ),
               ),
-              const SizedBox.expand(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomCenter,
-                      stops: [0.0, 0.4],
-                      colors: <Color>[
-                        Colors.black87,
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )),
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
@@ -169,30 +152,25 @@ class _MovieDetails extends StatelessWidget {
             ],
           ),
         ),
-
         //generos de la pelicula
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Wrap(
-            children: [
-              ...movie.genreIds.map(
-                (gender) => Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  child: Chip(
-                    label: Text(gender),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
+        Wrap(
+          children: [
+            ...movie.genreIds.map(
+              (gender) => Container(
+                margin:
+                    const EdgeInsets.only(right: 5, bottom: 5, top: 5, left: 8),
+                child: Chip(
+                  label: Text(gender),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-
         //Actores de la pelicula
         _ActorsByMovie(movieId: movie.id.toString()),
-
         const SizedBox(height: 50),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../domain/entities/movie.dart';
 
@@ -16,7 +17,6 @@ class MoviesSlideshow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final size = MediaQuery.of(context).size;
-    print(size.width);
 
     double dynamicHeight(double width, double height) {
       if (width >= 2500) {
@@ -47,7 +47,9 @@ class MoviesSlideshow extends StatelessWidget {
             ),
           ),
           itemCount: movies.length,
-          itemBuilder: (context, index) => _Slide(movie: movies[index]),
+          itemBuilder: (context, index) => GestureDetector(
+              onTap: () => context.push('/home/0/movie/${movies[index].id}'),
+              child: _Slide(movie: movies[index])),
         ),
       ),
     );
@@ -61,6 +63,7 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textStyles = Theme.of(context).textTheme;
     final decoration = BoxDecoration(
       borderRadius: BorderRadius.circular(20),
       boxShadow: const [
@@ -78,12 +81,81 @@ class _Slide extends StatelessWidget {
         decoration: decoration,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
-          child: Image.network(
-            movie.backdropPath,
-            fit: BoxFit.cover,
+          child: Stack(
+            children: [
+              Image.network(
+                movie.backdropPath,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              ),
+              // Adding a gradient overlay to ensure text visibility
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: <Color>[
+                        Colors.transparent,
+                        Colors.black54,
+                      ],
+                    ),
+                  ),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  child: Text(
+                    movie.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: textStyles.titleSmall?.copyWith(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
+
+
+// class _Slide extends StatelessWidget {
+//   final Movie movie;
+
+//   const _Slide({required this.movie});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final decoration = BoxDecoration(
+//       borderRadius: BorderRadius.circular(20),
+//       boxShadow: const [
+//         BoxShadow(
+//           color: Colors.black45,
+//           blurRadius: 10,
+//           offset: Offset(0, 5),
+//         ),
+//       ],
+//     );
+
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: 30),
+//       child: DecoratedBox(
+//         decoration: decoration,
+//         child: ClipRRect(
+//           borderRadius: BorderRadius.circular(20),
+//           child: Image.network(
+//             movie.backdropPath,
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
