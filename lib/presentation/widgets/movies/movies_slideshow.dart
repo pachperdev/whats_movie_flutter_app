@@ -18,29 +18,27 @@ class MoviesSlideshow extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     print(size.width);
 
-    double dynamicHeight() {
-      if (size.width >= 2500) {
-        return size.height * 0.6;
-      } else if (size.width >= 2000) {
-        return size.height * 0.5;
-      } else if (size.width >= 1500) {
-        return size.height * 0.4;
-      } else if (size.width >= 1000) {
-        return size.height * 0.3;
-      } else if (size.width >= 700) {
-        return size.height * 0.2;
+    double dynamicHeight(double width, double height) {
+      if (width >= 2500) {
+        return height * (0.6 - (width - 2500) * 0.00004);
+      } else if (width >= 2000) {
+        return height * (0.55 - (width - 2000) * 0.00025);
+      } else if (width >= 1500) {
+        return height * (0.3 + (2000 - width) * 0.00010);
+      } else if (width >= 800) {
+        return height * (0.21 + (1500 - width) * 0.00009);
       } else {
-        return size.height * 0.15;
+        return height * 0.21; // Valor constante para ancho menor de 800
       }
     }
 
     return SizedBox(
-      height: dynamicHeight(),
+      height: dynamicHeight(size.width, size.height),
       width: double.infinity,
       child: FadeInDownBig(
         child: Swiper(
-          viewportFraction: 0.5,
-          scale: 0.7,
+          viewportFraction: size.width <= 900 ? 0.7 : 0.5,
+          scale: 0.8,
           pagination: SwiperPagination(
             margin: const EdgeInsets.only(top: 0),
             builder: DotSwiperPaginationBuilder(
