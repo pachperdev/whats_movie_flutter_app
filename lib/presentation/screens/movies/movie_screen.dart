@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -74,6 +76,19 @@ class _CustomSliverAppBar extends StatelessWidget {
       backgroundColor: Colors.white,
       expandedHeight: size.height * 0.7,
       foregroundColor: Colors.white,
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.favorite_border,
+            color: Colors.red,
+          ),
+          // icon: const Icon(
+          //   Icons.favorite_rounded,
+          //   color: Colors.red,
+          // ),
+          onPressed: () {},
+        ),
+      ],
       flexibleSpace: FlexibleSpaceBar(
           background: Stack(
         children: [
@@ -92,20 +107,14 @@ class _CustomSliverAppBar extends StatelessWidget {
               }),
             ),
           ),
-          const SizedBox.expand(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomCenter,
-                  stops: [0.0, 0.4],
-                  colors: <Color>[
-                    Colors.black87,
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
+          const _CustomGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomCenter,
+            stops: [0.0, 0.4],
+            colors: <Color>[
+              Colors.black87,
+              Colors.transparent,
+            ],
           ),
         ],
       )),
@@ -237,6 +246,36 @@ class _ActorsByMovie extends ConsumerWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _CustomGradient extends StatelessWidget {
+  final AlignmentGeometry begin;
+  final AlignmentGeometry end;
+  final List<double> stops;
+  final List<Color> colors;
+
+  const _CustomGradient({
+    required this.begin,
+    required this.end,
+    required this.stops,
+    required this.colors,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox.expand(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: begin,
+            end: end,
+            stops: stops,
+            colors: colors,
+          ),
+        ),
       ),
     );
   }
