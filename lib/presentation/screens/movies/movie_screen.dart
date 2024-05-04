@@ -95,15 +95,6 @@ class _CustomSliverAppBar extends ConsumerWidget {
                 : const Icon(Icons.favorite_border),
             error: (_, __) => throw UnimplementedError(),
           ),
-
-          // const Icon(
-          //   Icons.favorite_border,
-          //   color: Colors.red,
-          // ),
-          // icon: const Icon(
-          //   Icons.favorite_rounded,
-          //   color: Colors.red,
-          // ),
           onPressed: () async {
             await ref
                 .watch(localStorageRepositoryProvider)
