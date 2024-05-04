@@ -7,7 +7,7 @@ import '../../domain/datasources/local_storage_datasource.dart';
 class IsarLocalStorageDatasource implements LocalStorageDatasource {
   late Future<Isar> db;
 
-  isarDatasource() {
+  IsarLocalStorageDatasource() {
     db = openDB();
   }
 
@@ -43,12 +43,10 @@ class IsarLocalStorageDatasource implements LocalStorageDatasource {
         await isar.movies.filter().idEqualTo(movie.id).findFirst();
 
     if (favoriteMovie != null) {
-      //borrar
       isar.writeTxn(() => isar.movies.delete(favoriteMovie.isarId!));
       return;
     }
 
-    //isertar
     isar.writeTxn(() => isar.movies.put(movie));
   }
 
