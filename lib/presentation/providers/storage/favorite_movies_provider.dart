@@ -5,43 +5,57 @@ import '../../../domain/entities/movie.dart';
 import '../providers.dart';
 
 final favoriteMoviesProvider =
-    StateNotifierProvider<StortageMoviesNotifier, Map<int, Movie>>((ref) {
+    StateNotifierProvider<StorageMoviesNotifier, Map<int, Movie>>((ref) {
   final localStorageRepository = ref.watch(localStorageRepositoryProvider);
-
-  return StortageMoviesNotifier(localStorageRepository: localStorageRepository);
+  return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
 
-class StortageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
+class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   int page = 0;
+  bool isLoading = false;
+  final int limit = 20;
   final LocalStorageRepository localStorageRepository;
-
-  StortageMoviesNotifier({required this.localStorageRepository}) : super({});
+  StorageMoviesNotifier({required this.localStorageRepository}) : super({});
 
   Future<List<Movie>> loadNextPage() async {
-    final movies =
-        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
+    if (isLoading) return [];
+    isLoading = true;
+    final movies = await localStorageRepository.loadMovies(
+        offset: page * 10, limit: limit);
     page++;
-
-    final tempMoviesMap = <int, Movie>{};
-    for (final movie in movies) {
-      tempMoviesMap[movie.id] = movie;
+    final Map<int, Movie> tempMovies = {};
+    for (Movie movie in movies) {
+      tempMovies[movie.id] = movie;
     }
-
-    state = {...state, ...tempMoviesMap};
-
+    state = {...state, ...tempMovies};
+    await Future.delayed(const Duration(milliseconds: 200));
+    isLoading = false;
     return movies;
   }
 
   Future<void> toggleFavorite(Movie movie) async {
+    // Cuando se llama a toggleFavorite, primero se verifca si la película ya está en favoritos.
+    final bool isMovieInFavorites =
+        await localStorageRepository.isMovieFavorite(movie.id);
+
+    // independientemente de si la película está en favoritos o no, se alterna en la base de datos.
     await localStorageRepository.toggleFavorite(movie);
 
-    final bool isMovieInFavorites = state[movie.id] != null;
-
+    // Si la película estaba en favoritos, se elimina del estado
     if (isMovieInFavorites) {
       state.remove(movie.id);
       state = {...state};
     } else {
-      state = {...state, movie.id: movie};
+      // verificar si está cargando películas para que en ese momento se añdada la película y no antes
+      if (isLoading && state.length >= limit) {
+        state = {...state, movie.id: movie};
+      }
+      // verficar si  las películas en favoritos son menor al tamaño límite, en ese caso se agrega la película
+      if (state.length < limit) state = {...state, movie.id: movie};
+      //verifica si el tamaño es mayor a límite de pantalla, pero también se tiene en cuenta en caso de que no esté cargando películas
+      if (state.length > limit && !isLoading) {
+        state = {...state, movie.id: movie};
+      }
     }
   }
 }
