@@ -29,7 +29,7 @@ class _MovieMasonryState extends State<MovieMasonry> {
       if (scrollController.position.pixels + 100 >=
           scrollController.position.maxScrollExtent) {
         await Future.delayed(
-          const Duration(seconds: 1),
+          const Duration(milliseconds: 500),
           () async => widget.loadNextPage?.call(),
         );
       }

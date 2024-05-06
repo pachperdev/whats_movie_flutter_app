@@ -18,7 +18,8 @@ class StortageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   StortageMoviesNotifier({required this.localStorageRepository}) : super({});
 
   Future<List<Movie>> loadNextPage() async {
-    final movies = await localStorageRepository.loadMovies(offset: page * 10);
+    final movies =
+        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
     page++;
 
     final tempMoviesMap = <int, Movie>{};
