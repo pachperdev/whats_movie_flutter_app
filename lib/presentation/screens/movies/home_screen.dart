@@ -4,10 +4,10 @@ import '../../views/views.dart';
 import '../../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
-  final int pageindex;
+  final int pageIndex;
   const HomeScreen({
     super.key,
-    required this.pageindex,
+    required this.pageIndex,
   });
 
   final viewRoutes = const <Widget>[
@@ -20,10 +20,10 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: pageindex,
+        index: pageIndex,
         children: viewRoutes,
       ),
-      bottomNavigationBar: CustomBottomNavigation(currentIndex: pageindex),
+      bottomNavigationBar: CustomBottomNavigation(currentIndex: pageIndex),
     );
   }
 }
