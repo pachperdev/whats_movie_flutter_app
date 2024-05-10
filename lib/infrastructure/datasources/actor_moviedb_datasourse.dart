@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:whats_movie_flutter_app/infrastructure/models/models.dart';
 
 import '../../config/constants/environment.dart';
 import '../../domain/datasources/actors_datasourse.dart';
-import '../../domain/entities/actor.dart';
+import '../../domain/entities/entities.dart';
 import '../mappers/actor_mapper.dart';
+import '../models/models.dart';
 
 class ActorMovieDbDatasource extends ActorDatasource {
   final dio = Dio(

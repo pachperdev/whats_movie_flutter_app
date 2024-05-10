@@ -1,9 +1,11 @@
+import 'package:whats_movie_flutter_app/domain/entities/video.dart';
+
 import '../../domain/datasources/movies_datasource.dart';
 import '../../domain/entities/movie.dart';
 import '../../domain/repositories/movies_repository.dart';
 
 class MovieRepositoryImpl implements MoviesRepository {
-  final MoviesDataSource dataSource;
+  final MoviesDatasource dataSource;
 
   MovieRepositoryImpl(this.dataSource);
 
@@ -35,5 +37,15 @@ class MovieRepositoryImpl implements MoviesRepository {
   @override
   Future<List<Movie>> searchMovies(String query) {
     return dataSource.searchMovies(query);
+  }
+
+  @override
+  Future<List<Movie>> getSimilarMovies(int movieId) {
+    return dataSource.getSimilarMovies(movieId);
+  }
+
+  @override
+  Future<List<Video>> getYoutubeVideosById(int movieId) {
+    return dataSource.getYoutubeVideosById(movieId);
   }
 }
