@@ -21,9 +21,6 @@ class MovieMapNotifier extends StateNotifier<Map<String, Movie>> {
     if (state[movieId] != null) return;
     final movie = await getMovie(movieId);
 
-    state = {
-      ...state,
-      movieId: movie,
-    };
+    state = {...state, movieId: movie};
   }
 }

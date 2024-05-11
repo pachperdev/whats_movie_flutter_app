@@ -84,7 +84,7 @@ class _Slide extends StatelessWidget {
           child: Stack(
             children: [
               Image.network(
-                movie.backdropPath,
+                movie.backdropPath!,
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -107,7 +107,7 @@ class _Slide extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   child: Text(
-                    movie.title,
+                    movie.title!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: textStyles.titleSmall?.copyWith(

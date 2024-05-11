@@ -16,7 +16,7 @@ class MoviePosterLink extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.network(
-            movie.posterPath,
+            movie.posterPath!,
           ),
         ),
       ),

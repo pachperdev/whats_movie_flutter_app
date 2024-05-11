@@ -96,7 +96,9 @@ class _Slide extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                movie.posterPath,
+                movie.posterPath!,
+                // movie.posterPath ??
+                //     'https://cdn.boxofficebuz.com/no_poster_available.svg',
                 fit: BoxFit.cover,
                 width: 150,
                 loadingBuilder: (BuildContext context, Widget child,
@@ -125,7 +127,7 @@ class _Slide extends StatelessWidget {
           SizedBox(
             width: 150,
             child: Text(
-              movie.title,
+              movie.title!,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: textStyles.titleSmall,
@@ -145,7 +147,7 @@ class _Slide extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Text(
-                HumanFormats.number(movie.popularity),
+                HumanFormats.number(movie.popularity!),
                 style: textStyles.bodySmall,
               ),
             ],

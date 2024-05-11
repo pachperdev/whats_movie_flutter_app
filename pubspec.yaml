@@ -20,6 +20,7 @@ dependencies:
   isar: ^3.1.0
   isar_flutter_libs: ^3.1.0
   path_provider: ^2.1.3
+  youtube_player_flutter: ^9.0.1
 
 dev_dependencies:
   flutter_test:
@@ -33,3 +34,4 @@ flutter:
 
   assets:
     - .env
+    - assets/loaders/

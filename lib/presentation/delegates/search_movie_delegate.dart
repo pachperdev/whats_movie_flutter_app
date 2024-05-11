@@ -155,7 +155,7 @@ class _MovieItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: Image.network(
-                  movie.posterPath,
+                  movie.posterPath!,
                   loadingBuilder: (context, child, loadingProgress) =>
                       FadeIn(child: child),
                 ),
@@ -168,14 +168,14 @@ class _MovieItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    movie.title,
+                    movie.title!,
                     style: textStyles.titleMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 3),
                   Text(
-                    movie.overview,
+                    movie.overview!,
                     style: textStyles.bodySmall,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -186,7 +186,7 @@ class _MovieItem extends StatelessWidget {
                           color: Colors.yellow.shade800),
                       const SizedBox(width: 5),
                       Text(
-                        HumanFormats.number(movie.voteAverage, 1),
+                        HumanFormats.number(movie.voteAverage!, 1),
                         style: textStyles.bodyMedium?.copyWith(
                           color: Colors.yellow.shade900,
                         ),
