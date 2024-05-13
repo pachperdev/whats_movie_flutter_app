@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entities/movie.dart';
+import '../../../domain/entities/entities.dart';
 import 'movies_providers.dart';
 
 final moviesSlideshowProvider = Provider<List<Movie>>((ref) {

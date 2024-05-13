@@ -1,24 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../domain/entities/movie.dart';
+import '../../../domain/entities/entities.dart';
 import '../providers.dart';
 
 final searchQueryProvider = StateProvider<String>((ref) => '');
 
-final searchMoviesProvider =
+final searchedMoviesProvider =
     StateNotifierProvider<SearchedMoviesNotifier, List<Movie>>((ref) {
   final movieRepository = ref.read(movieRepositoryProvider);
 
   return SearchedMoviesNotifier(
-    searchMovies: movieRepository.searchMovies,
-    ref: ref,
-  );
+      searchMovies: movieRepository.searchMovies, ref: ref);
 });
 
 typedef SearchMoviesCallback = Future<List<Movie>> Function(String query);
 
 class SearchedMoviesNotifier extends StateNotifier<List<Movie>> {
-  SearchMoviesCallback searchMovies;
+  final SearchMoviesCallback searchMovies;
   final Ref ref;
 
   SearchedMoviesNotifier({
@@ -31,7 +29,6 @@ class SearchedMoviesNotifier extends StateNotifier<List<Movie>> {
     ref.read(searchQueryProvider.notifier).update((state) => query);
 
     state = movies;
-
     return movies;
   }
 }

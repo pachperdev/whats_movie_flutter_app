@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../domain/entities/entities.dart';

@@ -1,17 +1,13 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/entities/movie.dart';
+import '../../../domain/entities/entities.dart';
 
 class MoviesSlideshow extends StatelessWidget {
   final List<Movie> movies;
 
-  const MoviesSlideshow({
-    super.key,
-    required this.movies,
-  });
+  const MoviesSlideshow({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -35,22 +31,19 @@ class MoviesSlideshow extends StatelessWidget {
     return SizedBox(
       height: dynamicHeight(size.width, size.height),
       width: double.infinity,
-      child: FadeInDownBig(
-        child: Swiper(
-          viewportFraction: size.width <= 900 ? 0.7 : 0.5,
-          scale: 0.8,
-          pagination: SwiperPagination(
-            margin: const EdgeInsets.only(top: 0),
-            builder: DotSwiperPaginationBuilder(
-              activeColor: colors.primary,
-              color: colors.secondary,
-            ),
+      child: Swiper(
+        viewportFraction: size.width <= 900 ? 0.7 : 0.5,
+        scale: 0.8,
+        autoplay: true,
+        pagination: SwiperPagination(
+          margin: const EdgeInsets.only(top: 0),
+          builder: DotSwiperPaginationBuilder(
+            activeColor: colors.primary,
+            color: colors.secondary,
           ),
-          itemCount: movies.length,
-          itemBuilder: (context, index) => GestureDetector(
-              onTap: () => context.push('/home/0/movie/${movies[index].id}'),
-              child: _Slide(movie: movies[index])),
         ),
+        itemCount: movies.length,
+        itemBuilder: (context, index) => _Slide(movie: movies[index]),
       ),
     );
   }
@@ -83,11 +76,16 @@ class _Slide extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           child: Stack(
             children: [
-              Image.network(
-                movie.backdropPath!,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+              GestureDetector(
+                onTap: () => context.push('/home/0/movie/${movie.id}'),
+                child: FadeInImage(
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: double.infinity,
+                  placeholder:
+                      const AssetImage('assets/loaders/bottle-loader.gif'),
+                  image: NetworkImage(movie.backdropPath!),
+                ),
               ),
               // Adding a gradient overlay to ensure text visibility
               Align(
@@ -124,38 +122,3 @@ class _Slide extends StatelessWidget {
     );
   }
 }
-
-
-// class _Slide extends StatelessWidget {
-//   final Movie movie;
-
-//   const _Slide({required this.movie});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final decoration = BoxDecoration(
-//       borderRadius: BorderRadius.circular(20),
-//       boxShadow: const [
-//         BoxShadow(
-//           color: Colors.black45,
-//           blurRadius: 10,
-//           offset: Offset(0, 5),
-//         ),
-//       ],
-//     );
-
-//     return Padding(
-//       padding: const EdgeInsets.only(bottom: 30),
-//       child: DecoratedBox(
-//         decoration: decoration,
-//         child: ClipRRect(
-//           borderRadius: BorderRadius.circular(20),
-//           child: Image.network(
-//             movie.backdropPath,
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

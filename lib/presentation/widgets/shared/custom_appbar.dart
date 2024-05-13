@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../domain/entities/movie.dart';
+import '../../../domain/entities/entities.dart';
 import '../../delegates/search_movie_delegate.dart';
 import '../../providers/providers.dart';
 
@@ -33,7 +33,7 @@ class CustomAppbar extends ConsumerWidget {
               IconButton(
                 icon: const Icon(Icons.search),
                 onPressed: () async {
-                  final searchedMovies = ref.read(searchMoviesProvider);
+                  final searchedMovies = ref.read(searchedMoviesProvider);
                   final searcQuery = ref.read(searchQueryProvider);
 
                   showSearch<Movie?>(
@@ -41,7 +41,7 @@ class CustomAppbar extends ConsumerWidget {
                     context: context,
                     delegate: SearchMovieDelegate(
                       searchMovies: ref
-                          .read(searchMoviesProvider.notifier)
+                          .read(searchedMoviesProvider.notifier)
                           .searchMoviesByQuery,
                       initialMovies: searchedMovies,
                     ),

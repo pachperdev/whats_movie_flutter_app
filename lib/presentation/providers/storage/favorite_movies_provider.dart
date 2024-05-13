@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:whats_movie_flutter_app/domain/repositories/local_storage_repository.dart';
 
-import '../../../domain/entities/movie.dart';
+import '../../../domain/entities/entities.dart';
+import '../../../domain/repositories/local_storage_repository.dart';
 import '../providers.dart';
 
 final favoriteMoviesProvider =
@@ -10,52 +10,45 @@ final favoriteMoviesProvider =
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
 
+/*
+  {
+    1234: Movie,
+    1645: Movie,
+    6523: Movie,
+  }
+
+*/
+
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
   int page = 0;
-  bool isLoading = false;
-  final int limit = 20;
   final LocalStorageRepository localStorageRepository;
+
   StorageMoviesNotifier({required this.localStorageRepository}) : super({});
 
   Future<List<Movie>> loadNextPage() async {
-    if (isLoading) return [];
-    isLoading = true;
-    final movies = await localStorageRepository.loadMovies(
-        offset: page * 10, limit: limit);
+    final movies =
+        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
     page++;
-    final Map<int, Movie> tempMovies = {};
-    for (Movie movie in movies) {
-      tempMovies[movie.id!] = movie;
+
+    final tempMoviesMap = <int, Movie>{};
+    for (final movie in movies) {
+      tempMoviesMap[movie.id!] = movie;
     }
-    state = {...state, ...tempMovies};
-    await Future.delayed(const Duration(milliseconds: 200));
-    isLoading = false;
+
+    state = {...state, ...tempMoviesMap};
+
     return movies;
   }
 
   Future<void> toggleFavorite(Movie movie) async {
-    // Cuando se llama a toggleFavorite, primero se verifca si la película ya está en favoritos.
-    final bool isMovieInFavorites =
-        await localStorageRepository.isMovieFavorite(movie.id!);
-
-    // independientemente de si la película está en favoritos o no, se alterna en la base de datos.
     await localStorageRepository.toggleFavorite(movie);
+    final bool isMovieInFavorites = state[movie.id] != null;
 
-    // Si la película estaba en favoritos, se elimina del estado
     if (isMovieInFavorites) {
       state.remove(movie.id);
       state = {...state};
     } else {
-      // verificar si está cargando películas para que en ese momento se añdada la película y no antes
-      if (isLoading && state.length >= limit) {
-        state = {...state, movie.id!: movie};
-      }
-      // verficar si  las películas en favoritos son menor al tamaño límite, en ese caso se agrega la película
-      if (state.length < limit) state = {...state, movie.id!: movie};
-      //verifica si el tamaño es mayor a límite de pantalla, pero también se tiene en cuenta en caso de que no esté cargando películas
-      if (state.length > limit && !isLoading) {
-        state = {...state, movie.id!: movie};
-      }
+      state = {...state, movie.id!: movie};
     }
   }
 }

@@ -44,7 +44,7 @@ class CustomBottomNavigation extends StatelessWidget {
         ),
         NavigationDestination(
           icon: Icon(Icons.category_outlined),
-          label: 'Categories',
+          label: 'Popular',
         ),
         NavigationDestination(
           icon: Icon(Icons.favorite_border_rounded),
