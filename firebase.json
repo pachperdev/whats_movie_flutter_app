@@ -1,0 +1,41 @@
+{
+    "flutter": {
+        "platforms": {
+            "ios": {
+                "default": {
+                    "projectId": "whats-movie-flutter-app",
+                    "appId": "1:196062022855:ios:e71177edc5c17d991582e2",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "macos": {
+                "default": {
+                    "projectId": "whats-movie-flutter-app",
+                    "appId": "1:196062022855:ios:e71177edc5c17d991582e2",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "macos/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "whats-movie-flutter-app",
+                    "configurations": {
+                        "android": "1:196062022855:android:6a8d4b7000b453081582e2",
+                        "ios": "1:196062022855:ios:e71177edc5c17d991582e2",
+                        "macos": "1:196062022855:ios:e71177edc5c17d991582e2",
+                        "web": "1:196062022855:web:8d5da9597ee5e4561582e2",
+                        "windows": "1:196062022855:web:01b5f2e598e386651582e2"
+                    }
+                }
+            },
+            "android": {
+                "default": {
+                    "projectId": "whats-movie-flutter-app",
+                    "appId": "1:196062022855:android:6a8d4b7000b453081582e2",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            }
+        }
+    }
+}
