@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:whats_movie_flutter_app/domain/entities/movie.dart';
 
 import '../../domain/datasources/local_storage_datasource.dart';
@@ -14,8 +15,9 @@ class LocalStorageRepositoryImpl implements LocalStorageRepository {
   }
 
   @override
-  Future<List<Movie>> loadMovies({int limit = 10, int offset = 0}) {
-    return datasource.loadMovies(limit: limit, offset: offset);
+  Future<List<Movie>> loadMovies(
+      {int limit = 10, DocumentSnapshot? startAfter}) {
+    return datasource.loadMovies(limit: limit, startAfter: startAfter);
   }
 
   @override

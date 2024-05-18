@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../domain/entities/entities.dart';
 import '../../../domain/repositories/local_storage_repository.dart';
@@ -10,25 +11,20 @@ final favoriteMoviesProvider =
   return StorageMoviesNotifier(localStorageRepository: localStorageRepository);
 });
 
-/*
-  {
-    1234: Movie,
-    1645: Movie,
-    6523: Movie,
-  }
-
-*/
-
 class StorageMoviesNotifier extends StateNotifier<Map<int, Movie>> {
-  int page = 0;
+  DocumentSnapshot? lastDocument;
   final LocalStorageRepository localStorageRepository;
 
   StorageMoviesNotifier({required this.localStorageRepository}) : super({});
 
   Future<List<Movie>> loadNextPage() async {
-    final movies =
-        await localStorageRepository.loadMovies(offset: page * 10, limit: 20);
-    page++;
+    final movies = await localStorageRepository.loadMovies(
+        limit: 20, startAfter: lastDocument);
+
+    if (movies.isNotEmpty) {
+      lastDocument = movies.last
+          .docSnapshot; // Necesitarás ajustar tu modelo Movie para almacenar el snapshot del documento.
+    }
 
     final tempMoviesMap = <int, Movie>{};
     for (final movie in movies) {
